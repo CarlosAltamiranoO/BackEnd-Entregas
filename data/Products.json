@@ -1,0 +1,42 @@
+[
+	{
+		"id": 2,
+		"title": "Notebook",
+		"description": "Notebook hp ommen 15 retroiluminada roja",
+		"price": 1250000,
+		"thumbnail": [],
+		"code": "N109",
+		"stock": 4,
+		"status": true
+	},
+	{
+		"id": 3,
+		"title": "tablet",
+		"description": "tablet lenovo N10",
+		"price": 85000,
+		"thumbnail": [],
+		"code": "N10-1",
+		"stock": 9,
+		"status": true
+	},
+	{
+		"id": 4,
+		"title": "tablet asus",
+		"description": "tablet asus nexus 9",
+		"price": 250000,
+		"thumbnail": [],
+		"code": "N9-A",
+		"stock": 19,
+		"status": true
+	},
+	{
+		"id": 5,
+		"title": "pc",
+		"description": "computadora escritorio",
+		"price": 126000,
+		"thumbnail": [],
+		"code": "T125",
+		"stock": 6,
+		"status": true
+	}
+]
