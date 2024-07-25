@@ -31,7 +31,9 @@ socketServer.on('connection', async socket => {
     socketServer.sockets.emit('actualizarProductos', await manager.getProducts())
 
     socket.on('nuevoproducto', async producto => {
-        await manager.addProduct(producto)
+        const mg = await manager.addProduct(producto)
+        socketServer.sockets.emit('error', mg)
+
         socketServer.sockets.emit('actualizarProductos', await manager.getProducts())
     })
 
