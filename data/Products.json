@@ -38,5 +38,15 @@
 		"code": "T125",
 		"stock": 6,
 		"status": true
+	},
+	{
+		"id": 6,
+		"title": "workstation",
+		"description": "ThinkPad T16 2da Gen - Storm Grey",
+		"price": 3,
+		"thumbnail": [],
+		"code": "TP-001",
+		"stock": 3,
+		"status": true
 	}
 ]

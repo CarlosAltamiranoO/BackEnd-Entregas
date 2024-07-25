@@ -28,7 +28,7 @@ productsRouter.post('/', async (req, res) => {
     }
 })
 
-productsRouter.put('/:pid', async (req, res) => { // no funciona para actualizar el status (se puede cambiar el status de false a tru pero alrreves no
+productsRouter.put('/:pid', async (req, res) => { 
     try {
         const { pid } = req.params
         const producto = req.body

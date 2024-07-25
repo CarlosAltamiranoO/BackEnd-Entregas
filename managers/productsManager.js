@@ -48,7 +48,8 @@ export default class ProductsManager {
         await this.getProducts();
         if(product.code === undefined || product.title === undefined || product.description === undefined || product.stock === undefined ) return "ingrese todos los datos sugeridos"
         if (this.#findCode(product.code)) return 'el codigo del producto ya se encuentra cargado!'
-        if (product.status === undefined) product.status = true; // ver si se puede reemplazar por product.status = product.status || true;
+        //if (product.status === undefined || product.status === "") product.status = true;// nesesario ya que me manda un string en ves de booleano;
+        product.status = !product.status
         product.thumbnail = product.thumbnail || [];
         const id = this.#addId();
         product = { id: id, ...product }
