@@ -6,10 +6,16 @@ import ProductsManager from "../managers/productsManager.js"
 import {Server} from 'socket.io'
 import Handlebars from "express-handlebars";
 import __dirname from "./utils.js";
+import mongoose from "mongoose";
 
 const manager = new ProductsManager('./data/Products.json')
 const app = express()
 const PORT = 8080
+const conection = 'mongodb+srv://carloscbautn:1234@cluster0.98dxrol.mongodb.net/e-comerce?retryWrites=true&w=majority&appName=Cluster0'
+
+mongoose.connect(conection)
+    .then(() => console.log('conectado a la base'))
+    .catch((error) => console.log('error: ', error))
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))

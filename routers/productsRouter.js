@@ -1,8 +1,10 @@
 import { Router } from "express"
-import ProductsManager from "../managers/productsManager.js"
+/* import ProductsManager from "../managers/productsManager.js" */
+import { ProductsManager } from '../managers/productsManagerMongo.js'
 
 export const productsRouter = Router()
-const manager = new ProductsManager('./data/Products.json')
+/* const manager = new ProductsManager('./data/Products.json') */
+const manager = new ProductsManager()
 
 productsRouter.get('/', async (req, res) => { 
     const limit = req.query.limit
@@ -20,6 +22,7 @@ productsRouter.get('/:pid', async (req, res) => {
 
 productsRouter.post('/', async (req, res) => {
     try {
+        req.body.status === "true"? req.body.status = true : req.body.status = false
         const producto = req.body
         const respuesta = await manager.addProduct(producto)
         res.send(respuesta)
@@ -42,7 +45,7 @@ productsRouter.put('/:pid', async (req, res) => {
 productsRouter.delete('/:pid', async (req, res) => {
     try {
         const { pid } = req.params
-        const respuesta = await manager.deleteProduct(parseInt(pid))
+        const respuesta = await manager.deleteProduct(pid)
         res.send(JSON.stringify(respuesta))
 
     } catch (error) {
