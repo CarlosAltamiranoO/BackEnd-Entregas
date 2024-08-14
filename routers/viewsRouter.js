@@ -1,9 +1,11 @@
 import { Router } from "express"
 /* import ProductsManager from "../managers/productsManager.js" */
 import { ProductsManager} from '../managers/productsManagerMongo.js'
+import { CartsManager } from "../managers/cartsManagerMongo.js"
 
 export const viewsRouter = Router()
-const manager = new ProductsManager('./data/Products.json')
+const manager = new ProductsManager()
+const managerCart = new CartsManager()
 
 viewsRouter.get('/realtimeproducts', async (req, res) => {
     res.render('realTimeProducts', {
@@ -27,7 +29,7 @@ viewsRouter.get('/', async (req, res) => {
     
     const page = req.query.page || 1
     const limit = req.query.limit || 5
-    const params = { limit, page }
+    const params = { limit, page } || null
     const sort = req.query.sort
     let query = ""
     if (req.query.sort) { params.sort = { price: parseInt(sort) } }
@@ -42,7 +44,27 @@ viewsRouter.get('/', async (req, res) => {
     //console.log("productos: ", productos)
     res.render('home', {
         title: "HOME",
+        labelTitle: "panel de productos",
         hayProductos: productos.docs.length > 0,
         productos,
     })
+})
+viewsRouter.get('/carts/:cid', async (req, res) => {
+    try {
+        const cartId = req.params.cid
+        let respuesta = await managerCart.getCart(cartId)
+        const productsCart = respuesta.products.map(aux => aux.toObject())
+    
+        res.render('carrito', {
+            pageTitle: "productos del carrito",
+            labelTitle: "Tu Carrito:",
+            hayProductos: respuesta.products.length > 0,
+            productsCart,
+            cartId: cartId
+        })
+    } catch (error) {
+        console.log(error)
+        res.send('Los datos ingresados son incorrectos')
+    }
+
 })
