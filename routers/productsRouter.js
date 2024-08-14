@@ -6,12 +6,27 @@ export const productsRouter = Router()
 /* const manager = new ProductsManager('./data/Products.json') */
 const manager = new ProductsManager()
 
-productsRouter.get('/', async (req, res) => { 
-    const limit = req.query.limit
+/* productsRouter.get('/', async (req, res) => { 
+    const limit = req.query.limit || null
     if (!limit) return res.send(await manager.getProducts())
     let respuesta = await manager.getProducts()
     respuesta = respuesta.slice(0, parseInt(limit))
     return res.json(respuesta)
+}) */
+productsRouter.get('/', async (req, res) =>{
+    const page = req.query.page || 1
+    const limit = req.query.limit || 5
+    const params = { limit, page } || null
+    const sort = req.query.sort
+    let query = ""
+    if (req.query.sort) { params.sort = { price: parseInt(sort) } }
+    if (req.query.query) { query = { category: req.query.query } }
+    const productos = await manager.getProducts({ params, query })
+    const url = 'http://localhost:8080/'
+    productos.prevLink = productos.hasPrevPage?`${url}?page=${productos.prevPage}` : '';
+    productos.nextLink = productos.hasNextPage?`${url}?page=${productos.nextPage}` : '';
+    productos.isValid = !(page <= 0 || page >= productos.totalPages)
+    res.send(JSON.parse(productos))
 })
 
 productsRouter.get('/:pid', async (req, res) => {
