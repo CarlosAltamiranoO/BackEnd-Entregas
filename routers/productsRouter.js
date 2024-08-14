@@ -26,7 +26,7 @@ productsRouter.get('/', async (req, res) =>{
     productos.prevLink = productos.hasPrevPage?`${url}?page=${productos.prevPage}` : '';
     productos.nextLink = productos.hasNextPage?`${url}?page=${productos.nextPage}` : '';
     productos.isValid = !(page <= 0 || page >= productos.totalPages)
-    res.send(JSON.parse(productos))
+    res.json(productos)
 })
 
 productsRouter.get('/:pid', async (req, res) => {
